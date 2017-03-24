@@ -25,7 +25,9 @@ namespace :target do
         location_status = location['availability_status']
         location_quantity = location['onhand_quantity']
         if location_quantity > 0 || location_status == "IN_STOCK"
-          message = "STORE: #{store} has #{location_status} on hand. Status: #{location_status}"
+          binding.pry
+
+          message = "STORE: #{store} has #{location_quantity} on hand. Status: #{location_status}"
           send_sms(message)
           return
         end
@@ -34,6 +36,7 @@ namespace :target do
   end
 
   def send_sms(message)
+    binding.pry
     client = Twilio::REST::Client.new(ENV["TWILIO_SID"],ENV["TWILIO_TOKEN"])
     client.messages.create(to:ENV["NUM"], from:"+12017771251", body: message)
   end
